@@ -11,7 +11,8 @@ class BuildYourBowl extends StatefulWidget {
 }
 
 class _BuildYourBowlState extends State<BuildYourBowl> {
-  final itemM = new ItemModel(_id, _name, _price, _category);
+
+
 
   /*List _items = [
     {'itemName': 'CHICKEN', 'category': 'PROTEIN',},
@@ -45,36 +46,62 @@ class _BuildYourBowlState extends State<BuildYourBowl> {
         elevation: 0.0,
       ),
 
-      body: GroupedListView<dynamic, String>(
-        elements: items,
-        groupBy: (ItemModel) => ItemModel.category,
-        //groupComparator: (value1, value2) =>value2.compareTo(value1),
-        //itemComparator: (item1, item2) => item1['itemName'].compareTo(item2['itemName']),
-        order: GroupedListOrder.ASC,
-        useStickyGroupSeparators: false,
-        groupSeparatorBuilder: (String value) => Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: CustomText(
-            text: value,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomText(text: "Build Your BOWL"),
 
-          ),
-        ),
-        itemBuilder: (c, element){
-          return Container(
-            child: CheckboxListTile(
-              secondary: Image.asset("images/chicken.jpg"),
-              contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              //leading: Icon(Icons.account_circle),
-              title: CustomText(text: "ItemModel.name"),
-              value: _value,
-              onChanged: (bool value){
-                setState((){
-                  _value = value;
-                });
-              },
+
+                ],
+              ),
             ),
-          );
-        },
+            SizedBox(height: 10,),
+            Image.asset("images/bowl.jpg"),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GroupedListView<dynamic, String>(
+                elements: items,
+                groupBy: (ItemModel) => ItemModel.category,
+                //groupComparator: (value1, value2) =>value2.compareTo(value1),
+                //itemComparator: (item1, item2) => item1['itemName'].compareTo(item2['itemName']),
+                order: GroupedListOrder.ASC,
+                useStickyGroupSeparators: false,
+                shrinkWrap: true,
+                groupSeparatorBuilder: (String value) => Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: CustomText(
+                    text: value,
+
+                  ),
+                ),
+                itemBuilder: (c, element){
+                  return Container(
+                    child: CheckboxListTile(
+                      secondary: Image.asset("images/chicken.jpg"),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                      //leading: Icon(Icons.account_circle),
+                      title: CustomText(text: ItemModel.NAME),
+
+                      value: _value,
+                      onChanged: (bool value){
+                        setState((){
+                          _value = value;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       )
      /* SingleChildScrollView(
         child: Container(

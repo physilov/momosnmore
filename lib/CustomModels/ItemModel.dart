@@ -1,5 +1,12 @@
 class ItemModel{
   ItemModel(this._id, this._name, this._price, this._category);
+
+  static const ID = "id";
+  static const NAME = "name";
+  static const VALUE = "value";
+  static const PRICE = "price";
+  static const CATEGORY = "category";
+
   String _id;
   String _name;
   bool _value = false;
@@ -12,7 +19,7 @@ class ItemModel{
   String get price => _price;
   String get category => _category;
 
-  List items;
+  static const ITEMS = 'items';
 
 
 

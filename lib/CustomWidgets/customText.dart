@@ -11,6 +11,6 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text ?? null, style: TextStyle(fontFamily: family ?? 'Poppins',fontSize: size ?? 14, color: colors ?? Colors.black, fontWeight: weight ?? FontWeight.normal),);
+    return Text(text ?? null, style: TextStyle(fontFamily: family ?? 'Poppins',fontSize: size ?? 14, color: colors ?? Colors.green[800], fontWeight: weight ?? FontWeight.normal),);
   }
 }

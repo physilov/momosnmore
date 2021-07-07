@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:momos_and_more/Screens/buildYourBowl.dart';
+import 'package:momos_and_more/Screens/registerScreen.dart';
+import 'package:momos_and_more/Screens/signInScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.purple,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: BuildYourBowl(),
+      home: LoginScreen(),
     );
   }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "361187786282",
+    "project_id": "momosnmore-a4fa8",
+    "storage_bucket": "momosnmore-a4fa8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361187786282:android:e12df57729564944f74d53",
+        "android_client_info": {
+          "package_name": "com.example.momos_and_more"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361187786282-f1b8gq5b2pos2qb39o42u52m9h92o3id.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7S6oCSjhJbZRMJm04SpU-Qx4kayDXyp0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361187786282-f1b8gq5b2pos2qb39o42u52m9h92o3id.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

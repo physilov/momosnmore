@@ -1,35 +1,53 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:momos_and_more/Screens/buildYourBowl.dart';
+import 'package:momos_and_more/Screens/homeScreen.dart';
 import 'package:momos_and_more/Screens/registerScreen.dart';
 import 'package:momos_and_more/Screens/signInScreen.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import 'Providers/userProvider.dart';
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider.value(value: UserProvider.init()),
+    //ChangeNotifierProvider.value(value: CategoryProvider.initialize()),
+   // ChangeNotifierProvider.value(value: ProductProvider.initialize()),
+    //ChangeNotifierProvider.value(value: AppProvider()),
+
+  ],
+    child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Restaurant App',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primaryColor: Colors.green,
         primarySwatch: Colors.green,
         accentColor: Colors.purple,
         backgroundColor: Colors.purple,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: LoginScreen(),
-    );
+      home: HomeScreen(),
+    ),
+  ));
+}
+
+class ScreenController extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final auth = Provider.of<UserProvider>(context);
+    switch(auth.status){
+      case Status.Uninitialized:
+        return LoginScreen();
+      case Status.Unauthenticated:
+      case Status.Authenticating:
+        return LoginScreen();
+      case Status.Authenticated:
+        return BuildYourBowl();
+      default: return LoginScreen();
+    }
+
   }
 }
+

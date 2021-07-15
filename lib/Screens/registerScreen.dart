@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:momos_and_more/CustomWidgets/customText.dart';
+import 'package:momos_and_more/CustomWidgets/loading.dart';
+import 'package:momos_and_more/Providers/userProvider.dart';
+import 'package:momos_and_more/Screens/buildYourBowl.dart';
 import 'package:momos_and_more/Screens/signInScreen.dart';
 import 'package:momos_and_more/helpers/changeScreen.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key key}) : super(key: key);
@@ -12,11 +16,16 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
+  final _key = GlobalKey<ScaffoldState>();
   int id = 1;
   String radioButtonItem = 'YES';
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+
     return Scaffold(
+      key: _key,
       appBar: AppBar(
         actions: [
           IconButton(
@@ -32,7 +41,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         elevation: 0.0,
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: userProvider.status == Status.Authenticating
+          ? Loading()
+          : SingleChildScrollView(
         child: Column(
           children: [
             Row(
@@ -51,7 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(18.0,4,18,4),
               child: TextFormField(
-                controller: null,
+                controller: userProvider.firstname,
                 decoration: InputDecoration(
                     hintText: "First Name"
                 ),
@@ -60,7 +71,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(18.0,4,18,4),
               child: TextFormField(
-                controller: null,
+                controller: userProvider.lastname,
                 decoration: InputDecoration(
                   hintText: "Last Name",
 
@@ -70,7 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(18.0,4,18,4),
               child: TextFormField(
-                controller: null,
+                controller: userProvider.email,
                 decoration: InputDecoration(
                     hintText: "Email Address"
                 ),
@@ -79,7 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(18.0,4,18,4),
               child: TextFormField(
-                controller: null,
+                controller: userProvider.password,
                 decoration: InputDecoration(
                   hintText: "Password",
 
@@ -98,7 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(18.0,4,18,4),
               child: TextFormField(
-                controller: null,
+                controller: userProvider.phone,
                 decoration: InputDecoration(
                   hintText: "Phone Number",
 
@@ -147,7 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(18.0,4,18,0),
               child: TextFormField(
-                controller: null,
+                controller: userProvider.birthday,
                 decoration: InputDecoration(
                     hintText: "Birthday(optional)"
                 ),
@@ -177,9 +188,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.green,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomText(text: "CREATE ACCOUNT", colors: Colors.white,),
+                child: GestureDetector(
+                  onTap: () async {
+                    if (!await userProvider.signUp()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("SignUp FAILED!")));
+                      return;
+                    }
+                   // categoryProvider.loadCategories();
+                    //productProvider.loadProducts();
+                    //userProvider.clearController();
+                    changeScreenReplacement(context, BuildYourBowl());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomText(text: "CREATE ACCOUNT", colors: Colors.white,),
+                  ),
                 ),
               ),
             ),
